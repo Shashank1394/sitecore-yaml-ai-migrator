@@ -25,5 +25,5 @@ export interface AppConfig {
 export interface Migration {
   id: string;
   description: string;
-  migrate(file: InputYamlFile): MigratedYamlFile;
+  migrate(file: InputYamlFile): MigratedYamlFile | null;
 }

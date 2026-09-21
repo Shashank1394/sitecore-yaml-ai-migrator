@@ -1,12 +1,13 @@
 import { getConfig } from "./config.js";
-import { ensureDirectories, readYamlFiles } from "./file-manager.js";
+import { clearDirectory, ensureDirectories, readYamlFiles } from "./file-manager.js";
 import { getMigration } from "./migration-registry.js";
 import { migrateFiles } from "./migrator.js";
 
 async function main(): Promise<void> {
   const config = getConfig();
   const migration = getMigration(config.instruction);
-  await ensureDirectories(config.inputDirectory, config.outputDirectory);
+  await ensureDirectories(config.inputDirectory);
+  await clearDirectory(config.outputDirectory);
   const files = await readYamlFiles(config.inputDirectory);
   console.log("Sitecore YAML AI Migrator\n=========================");
   console.log(`\nInput directory: ${config.inputDirectory}\nOutput directory: ${config.outputDirectory}\nInstruction: ${migration.id} — ${migration.description}\nBatch size: ${config.batchSize}\n`);

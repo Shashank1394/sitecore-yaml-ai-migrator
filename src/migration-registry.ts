@@ -1,7 +1,8 @@
 import { renderingsMigration } from "./instructions/renderings-migrator.js";
+import { renderingVariantsMigration } from "./instructions/rendering-variants-migrator.js";
 import type { Migration } from "./types.js";
 
-const migrations: Migration[] = [renderingsMigration];
+const migrations: Migration[] = [renderingsMigration, renderingVariantsMigration];
 
 export function getMigration(instruction: string): Migration {
   const normalized = instruction.trim().replace(/\\/g, "/").split("/").pop()

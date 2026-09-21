@@ -16,6 +16,10 @@ export async function migrateFiles(config: AppConfig, migration: Migration, file
     try {
       for (const input of currentBatch) {
         const file = migration.migrate(input);
+        if (file === null) {
+          console.log(`Skipped:   ${input.fileName}`);
+          continue;
+        }
         await writeMigratedFile(config.outputDirectory, file);
         console.log(`Generated: ${file.fileName}`);
       }

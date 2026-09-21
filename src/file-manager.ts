@@ -1,4 +1,4 @@
-import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { InputYamlFile, MigratedYamlFile } from "./types.js";
 
@@ -6,6 +6,16 @@ const YAML_EXTENSION = /\.ya?ml$/i;
 
 export async function ensureDirectories(...directories: string[]): Promise<void> {
   await Promise.all(directories.map((directory) => mkdir(directory, { recursive: true })));
+}
+
+/** Delete all contents of a directory (but keep the directory itself). */
+export async function clearDirectory(directory: string): Promise<void> {
+  await mkdir(directory, { recursive: true });
+  const entries = await readdir(directory, { withFileTypes: true });
+  await Promise.all(entries.map((entry) => {
+    const entryPath = path.join(directory, entry.name);
+    return rm(entryPath, { recursive: true, force: true });
+  }));
 }
 
 export async function readYamlFiles(inputDirectory: string): Promise<InputYamlFile[]> {
