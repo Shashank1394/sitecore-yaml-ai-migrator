@@ -23,10 +23,11 @@ function migrate(file: InputYamlFile): MigratedYamlFile {
   const sharedFields = root.get("SharedFields", true);
   if (isSeq(sharedFields)) {
     // Filter out removed hints and update Parameters Template ID.
-    sharedFields.items = sharedFields.items.filter((field: { get: (arg0: string) => any; set: (arg0: string, arg1: string) => void; }) => {
-      if (!isMap(field)) return true;
-      const hint = field.get("Hint");
-      if (hint === "Parameters Template") field.set("ID", PARAMETERS_TEMPLATE_FIELD);
+    sharedFields.items = sharedFields.items.filter((field: unknown) => {
+      const f = field as { get: (arg0: string) => any; set: (arg0: string, arg1: string) => void };
+      if (!isMap(f)) return true;
+      const hint = f.get("Hint");
+      if (hint === "Parameters Template") f.set("ID", PARAMETERS_TEMPLATE_FIELD);
       return !REMOVED_HINTS.has(String(hint));
     });
 
