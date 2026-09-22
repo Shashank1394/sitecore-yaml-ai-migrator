@@ -41,7 +41,9 @@ pnpm dev -- --instruction data --input ./input --output ./output
 | `styles` | Styles items to the headless library structure |
 | `data` | Data items to the headless library structure |
 
-Files a migration does not recognise are skipped and reported in the run log.
+Files a migration does not convert (folder items, for example) are copied to `output/` and logged as `Copied`. The output folder is always a complete copy of the input tree, so it can be pasted straight into the Sitecore AI project.
+
+`DB: master` is removed from every file the tool writes, converted or copied, since Sitecore AI serialization does not carry the source database.
 
 ## Adding a migration
 
