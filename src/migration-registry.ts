@@ -1,8 +1,11 @@
+import { availableRenderingsMigration } from "./instructions/available-renderings-migrator.js";
+import { dataMigration } from "./instructions/data-migrator.js";
 import { renderingsMigration } from "./instructions/renderings-migrator.js";
 import { renderingVariantsMigration } from "./instructions/rendering-variants-migrator.js";
+import { stylesMigration } from "./instructions/styles-migrator.js";
 import type { Migration } from "./types.js";
 
-const migrations: Migration[] = [renderingsMigration, renderingVariantsMigration];
+const migrations: Migration[] = [renderingsMigration, renderingVariantsMigration, availableRenderingsMigration, stylesMigration, dataMigration];
 
 export function getMigration(instruction: string): Migration {
   const normalized = instruction.trim().replace(/\\/g, "/").split("/").pop()
