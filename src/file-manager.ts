@@ -38,11 +38,6 @@ export async function readYamlFiles(inputDirectory: string): Promise<InputYamlFi
   })));
 }
 
-export async function readInstructions(instructionsPath: string): Promise<string> {
-  try { return await readFile(instructionsPath, "utf8"); }
-  catch (error) { throw new Error(`Could not read migration instructions at ${instructionsPath}: ${error instanceof Error ? error.message : String(error)}`); }
-}
-
 export async function writeMigratedFile(outputDirectory: string, file: MigratedYamlFile): Promise<void> {
   const relativePath = file.relativePath ?? file.fileName;
   const destination = path.resolve(outputDirectory, relativePath);

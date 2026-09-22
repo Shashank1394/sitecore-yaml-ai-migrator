@@ -11,10 +11,6 @@ export interface MigratedYamlFile {
   content: string;
 }
 
-export interface LlmMigrationResponse {
-  files: MigratedYamlFile[];
-}
-
 export interface AppConfig {
   batchSize: number;
   inputDirectory: string;
